@@ -1,0 +1,70 @@
+<div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+  <div class="d-flex align-items-center justify-content-center w-100">
+    <div class="row justify-content-center w-100">
+      <div class="col-md-6 col-lg-4 col-xxl-3">
+        <div class="card mb-0">
+          <div class="card-body">
+            <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+              <img src="/assets/images/logos/divar.svg" width="180" alt="" />
+            </a>
+            <p class="text-center">ورود به حساب کاربری</p>
+            <%if(typeof otpResult !== 'undefined' && otpResult){%>
+              <%if(otpResult.message == "login successfully"){%>
+                <meta http-equiv="refresh" content="1; URL=/panel" />
+                <div class="row">
+                  <p class="alert alert-info"><%= otpResult.message %></p>
+                </div>
+              <%}else{%>
+                <div class="row">
+                  <p class="alert alert-info"><%=otpResult?.message ?? otpResult%></p>
+                </div>
+                <form action="/auth/check-otp?mobile=<%= mobile %>" method="post" enctype="multipart/form-data;">
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">کد تایید</label>
+                    <input type="text" name="code" placeholder="کد" class="form-control" />
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div class="form-check">
+                      <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked />
+                      <label class="form-check-label text-dark" for="flexCheckChecked">
+                        مرا به خاطر بسپار
+                      </label>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">تایید کد</button>
+                </form>
+                <%}%>
+            <%}else if(result){%>
+              <div class="row">
+                <p class="alert alert-info"><%= result?.error ?? result?.message ?? result %></p>
+              </div>
+              <form action="/auth/check-otp?mobile=<%= mobile %>" method="post" enctype="multipart/form-data;">
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">کد تایید</label>
+                  <input type="text" name="code" placeholder="کد" class="form-control" />
+                </div>
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                  <div class="form-check">
+                    <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked />
+                    <label class="form-check-label text-dark" for="flexCheckChecked">
+                      مرا به خاطر بسپار
+                    </label>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">تایید کد</button>
+              </form>
+            <%}else{%>
+              <form action="/auth/send-otp?" method="get">
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">شماره موبایل</label>
+                  <input type="text" name="mobile" placeholder="شماره" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">دریافت کد تایید</button>
+              </form>
+            <%}%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
